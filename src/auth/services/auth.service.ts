@@ -36,8 +36,8 @@ export class AuthService {
   }
 
   private async generateToken(user: User) {
-    const { id, login } = user;
-    return this.jwtService.sign({ id, login });
+    const { id, login, family_space_id } = user;
+    return this.jwtService.sign({ id, login, family_space_id });
   }
 
   private async validateUser(userDto: CreateUserDto) {

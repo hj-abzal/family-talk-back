@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard, UserRequestType } from "../../auth/jwt-auth.guard";
 import { PostsService } from "../posts.service";
 import { CreatePostDto } from "../create-post.dto";
@@ -17,7 +17,7 @@ export class PostsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getAllPosts(@Req() req: UserRequestType) {
-    return this.postsService.getAll(req.user.id);
+  getAllPosts(@Req() req: UserRequestType, @Query() query) {
+    return this.postsService.getAll(req.user.id, query);
   }
 }

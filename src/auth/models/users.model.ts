@@ -20,6 +20,9 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
+  @Column({ type: DataType.STRING, defaultValue: 'Hey there I am using Family talk'})
+  status: string;
+  
   @Column({ type: DataType.STRING })
   picture: string;
 

@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { PostsService } from "../posts.service";
 import { JwtAuthGuard } from "../../auth/jwt-auth.guard";
 
@@ -10,7 +10,7 @@ export class NewsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getAllNews() {
-    return this.postsService.getAllInclude();
+  getAllNews( @Query() query) {
+    return this.postsService.getAllInclude(query);
   }
 }

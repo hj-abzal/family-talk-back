@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { FamilySpace } from "../models/family-space.model";
 import { CreateFamilySpaceDto } from "../dto/create-family-space.dto";
 import { InjectModel } from "@nestjs/sequelize";
+import { User } from "../../auth/models/users.model";
 
 @Injectable()
 export class FamilySpaceService {
@@ -17,7 +18,11 @@ export class FamilySpaceService {
     return await this.familySpaceRepository.create(dto);
   }
 
-  async getByLogin(login): Promise<any> {
-    return await this.familySpaceRepository.findOne({where: {login}})
+  async getByLogin(login: string): Promise<any> {
+    return await this.familySpaceRepository.findOne({ where: { login } });
+  }
+
+  async getById(id: number): Promise<any> {
+    return await this.familySpaceRepository.findOne({ where: { id }, include: User });
   }
 }
