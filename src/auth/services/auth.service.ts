@@ -13,16 +13,17 @@ export class AuthService {
   ) {
   }
 
-
   async login(userDto: CreateUserDto) {
     const user = await this.validateUser(userDto);
-    return this.generateToken(user);
+    const token = await this.generateToken(user);
+    return { user, token};
   }
 
-  async logout(user: User) {
-    return this.userService.delete(user.id);
+  async me(id: number) {
+    const user = await this.userService.getById(id)
+    const token = await this.generateToken(user);
+    return { user, token};
   }
-
 
   async registration(userDto: CreateUserDto) {
     const candidate = await this.userService.getByLogin(userDto.login);
@@ -31,13 +32,12 @@ export class AuthService {
     }
     const hashPassword = await bcrypt.hash(userDto.password, 5);
     const user = await this.userService.create({ ...userDto, password: hashPassword });
-
-    return this.generateToken(user);
+    return {addedUser: user};
   }
 
   private async generateToken(user: User) {
     const { id, login } = user;
-    return { token: this.jwtService.sign({ id, login }) };
+    return this.jwtService.sign({ id, login });
   }
 
   private async validateUser(userDto: CreateUserDto) {

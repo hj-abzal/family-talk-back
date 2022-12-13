@@ -22,7 +22,11 @@ export class UsersService {
       });
   }
 
-  async getByLogin(login): Promise<any> {
+  async getByLogin(login: string): Promise<any> {
     return await this.userRepository.findOne({where: {login}})
+  }
+
+  async getById(id: number): Promise<any> {
+    return await this.userRepository.findOne({where: {id}})
   }
 }

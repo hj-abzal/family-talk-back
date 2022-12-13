@@ -12,7 +12,7 @@ export class FamilySpaceController {
   }
 
 
-  @Post("/create")
+  @Post("")
   createSpace(@Body() dto: CreateFamilySpaceDto) {
     return this.familySpaceService.create(dto);
   }
