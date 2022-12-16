@@ -56,7 +56,7 @@ export class PostsService {
     return {
       currentPage: query?.page || 1,
       totalCount: await this.postsRepository.count({where}),
-      posts: await this.postsRepository.findAll(request).then((res) => res.filter(p => p.author.family_space_id === family_space_id))
+      news: await this.postsRepository.findAll(request).then((res) => res.filter(p => p.author.family_space_id === family_space_id))
     };
   }
 }

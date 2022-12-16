@@ -1,5 +1,6 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { User } from "../auth/models/users.model";
+import { ApiProperty } from "@nestjs/swagger";
 
 
 interface PostsCreationAttrs {
@@ -12,18 +13,24 @@ interface PostsCreationAttrs {
 @Table({ tableName: "posts" })
 export class Posts extends Model<Posts, PostsCreationAttrs> {
 
+  @ApiProperty({example: 1, description: 'Id of post'})
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
 
+  @ApiProperty({example: "What is React?!", description: 'title of user'})
   @Column({ type: DataType.STRING, allowNull: false })
   title: string;
 
+  @ApiProperty({example: 'React is ...', description: 'main text'})
   @Column({ type: DataType.STRING, allowNull: true })
   content: string;
 
+  @ApiProperty({example: 'https://post-picture.com', description: 'picture of post'})
   @Column({ type: DataType.STRING })
   picture: string;
 
+
+  @ApiProperty({example: 1, description: 'Id of author user'})
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, allowNull: false })
   user_id: number;
