@@ -53,9 +53,12 @@ export class PostsService {
     if (query.page) {
       request.offset = query.page * limit - limit;
     }
+
+    const allPosts = await this.postsRepository.findAll({include: User, where})
+      .then((res) => res.filter(p => p.author.family_space_id === family_space_id))
     return {
       currentPage: query?.page || 1,
-      totalCount: await this.postsRepository.count({where}),
+      totalCount: allPosts.length,
       news: await this.postsRepository.findAll(request).then((res) => res.filter(p => p.author.family_space_id === family_space_id))
     };
   }
