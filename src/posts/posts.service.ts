@@ -40,7 +40,7 @@ export class PostsService {
   }
 
   async getAllInclude(query: any, family_space_id: number) {
-    const limit = 5;
+    const limit = 10;
     let page = 1;
     let where: any = {};
 

@@ -12,6 +12,17 @@ export class UsersService {
     return await this.userRepository.create(dto);
   }
 
+  async update(user: User, id: number): Promise<any> {
+    delete user.family_space_id;
+    delete user.id;
+    return await this.userRepository.update(
+      { ...user },
+      { where: { id } }
+    ).then(() => {
+      return { message: "ok", user };
+    });
+  }
+
   async delete(id: number): Promise<any> {
     return this.userRepository.destroy({ where: { id } })
       .then(() => {
@@ -23,10 +34,10 @@ export class UsersService {
   }
 
   async getByLogin(login: string): Promise<any> {
-    return await this.userRepository.findOne({where: {login}})
+    return await this.userRepository.findOne({ where: { login } });
   }
 
   async getById(id: number): Promise<any> {
-    return await this.userRepository.findOne({where: {id}})
+    return await this.userRepository.findOne({ where: { id } });
   }
 }
