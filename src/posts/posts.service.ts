@@ -40,7 +40,8 @@ export class PostsService {
   }
 
   async getAllInclude(query: any, family_space_id: number) {
-    const limit = 10;
+    const limit = 5;
+    let page = 1;
     let where: any = {};
 
     if (query.search) {
@@ -49,17 +50,28 @@ export class PostsService {
       };
     }
 
-    let request: FindOptions = { include: User, where, limit, offset: 0 };
+    let allPosts = await this.postsRepository.findAll({include: User, where})
+      .then((res) => res.filter(p => p.author.family_space_id === family_space_id));
+    const totalCount = allPosts.length;
+
     if (query.page) {
-      request.offset = query.page * limit - limit;
+      page = query.page
+    }
+    if (totalCount > limit) {
+      const amount = limit * page;
+
+      allPosts = allPosts.filter((el, i) => {
+       if (i < amount - limit || i >= amount) {
+         return false
+       }
+        return true
+      });
     }
 
-    const allPosts = await this.postsRepository.findAll({include: User, where})
-      .then((res) => res.filter(p => p.author.family_space_id === family_space_id))
     return {
+      totalCount,
       currentPage: query?.page || 1,
-      totalCount: allPosts.length,
-      news: await this.postsRepository.findAll(request).then((res) => res.filter(p => p.author.family_space_id === family_space_id))
+      news: allPosts
     };
   }
 }
