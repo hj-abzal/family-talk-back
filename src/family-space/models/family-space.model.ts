@@ -20,6 +20,10 @@ export class FamilySpace extends Model<FamilySpace, FamilySpaceCreationAttrs> {
     @Column({ type: DataType.STRING, allowNull: false })
     title: string;
 
+    @ApiProperty({example: "Here we go", description: 'status of family'})
+    @Column({ type: DataType.STRING, allowNull: true })
+    status: string;
+
     @ApiProperty({example: 'Suan', description: 'login of family space'})
     @Column({ type: DataType.STRING, unique: true, allowNull: false })
     login: string;
