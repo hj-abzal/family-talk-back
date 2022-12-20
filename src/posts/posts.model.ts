@@ -26,8 +26,8 @@ export class Posts extends Model<Posts, PostsCreationAttrs> {
   content: string;
 
   @ApiProperty({example: ['base64'], description: 'base 64'})
-  @Column({ type: DataType.ARRAY(DataType.STRING(10000)) })
-  picture: string[];
+  @Column({ type: DataType.STRING(100000) })
+  picture: string;
 
 
   @ApiProperty({example: 1, description: 'Id of author user'})
