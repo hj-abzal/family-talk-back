@@ -30,7 +30,7 @@ export class User extends Model<User, UserCreationAttrs> {
   status: string;
 
   @ApiProperty({example: "https://my-photo.com", description: 'photo of user'})
-  @Column({ type: DataType.STRING(1000000) })
+  @Column({ type: DataType.STRING(100000) })
   picture: string;
 
   @ApiProperty({example: 'PostsType[]', description: 'Posts of user'})
