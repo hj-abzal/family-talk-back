@@ -33,7 +33,7 @@ export class FamilySpace extends Model<FamilySpace, FamilySpaceCreationAttrs> {
     password: string;
 
     @ApiProperty({example: "https://my-photo.com", description: 'photo of user'})
-    @Column({ type: DataType.STRING(100000) })
+    @Column({ type: DataType.STRING(1000000) })
     picture: string;
 
     @HasMany(() => User)
